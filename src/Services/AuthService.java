@@ -4,6 +4,7 @@ import Models.User;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Created by kevin on 31/05/2017.
@@ -11,11 +12,11 @@ import java.util.ArrayList;
 public class AuthService implements IAuthService {
 
 	private static final String userFileName = "bin/saveUser.txt";
-	private ArrayList<User> onlineUsers;
+	private HashMap<Integer, User> onlineUsers = new HashMap<>();
 
 
 	@Override
-	public ArrayList<User> getOnlineUsers() {
+	public HashMap<Integer, User> getOnlineUsers() {
 		return onlineUsers;
 	}
 
@@ -23,81 +24,51 @@ public class AuthService implements IAuthService {
 	@Override
 	public int login(User user) {
 
-		User savedUser = null;
+		PersistenceService ps = new PersistenceService();
+		HashMap<Integer, User> savedUsers = new HashMap<Integer, User>();
 
 		// Deserialization
-		try {
-			//TODO fix persistence
 
-			// Reading the object from a file
-			FileInputStream file = new FileInputStream(userFileName);
-			ObjectInputStream in = new ObjectInputStream(file);
+		Object tmp = ps.read(userFileName);
 
-			// Method for deserialization of object
-			savedUser = (User) in.readObject();
+		if (tmp != null) {
+			savedUsers = (HashMap<Integer, User>) tmp;
 
-			in.close();
-			file.close();
+			User tmpUser = savedUsers.get(user.getId());
+			if (tmpUser != null && tmpUser.getPassword().equals(user.getPassword()) && tmpUser.getName().equals(user.getName())) {
+				onlineUsers.put(user.getId(), user);
+				System.out.println("user connected");
+				return 0;
+			}
 
-			onlineUsers.add(user);
-
-
-			System.out.println("Object has been deserialized ");
-			System.out.println(savedUser);
-
-		} catch (IOException ex) {
-			System.out.println("IOException is caught");
-		} catch (ClassNotFoundException ex) {
-			System.out.println("ClassNotFoundException is caught");
 		}
 
-		return 0;
+		System.out.println("user not connected");
+		return -1;
 	}
 
 	@Override
 	public int register(User user) {
 
-		ArrayList<User> savedUsers = new ArrayList<User>();
+		HashMap<Integer, User> savedUsers = new HashMap<Integer, User>();
 
-		try {
-
-			File fI = new File(userFileName);
-
-			if (fI.exists()) {
-
-				FileInputStream fileI = new FileInputStream(userFileName);
-				ObjectInputStream in = new ObjectInputStream(fileI);
-
-				// Method for deserialization of object
-				savedUsers = (ArrayList) in.readObject();
-				System.out.println(savedUsers);
-
-				in.close();
-				fileI.close();
-			}
-
-			//Saving of object in a file
-			FileOutputStream fileO = new FileOutputStream(userFileName);
-			ObjectOutputStream out = new ObjectOutputStream(fileO);
-
-			savedUsers.add(user);
-
-			// Method for serialization of object
-			out.writeObject(savedUsers);
+		PersistenceService ps = new PersistenceService();
 
 
-			out.close();
-			fileO.close();
+		Object tmp = ps.read(userFileName);
+
+		if (tmp != null)
+			savedUsers = (HashMap<Integer, User>) tmp;
 
 
-			System.out.println("Object has been serialized");
-		} catch (IOException ex) {
-			System.out.println("IOException is caught");
-			System.out.println(ex);
-			return -1;
-		} catch (ClassNotFoundException ex) {
-			System.out.println("ClassNotFoundException is caught");
+		savedUsers.put(user.getId(), user);
+
+		if (ps.write(userFileName, savedUsers)) {
+			savedUsers.remove(user.getId());
 		}
+
+
+		System.out.println("Object has been serialized");
 
 		return 0;
 	}
@@ -105,7 +76,7 @@ public class AuthService implements IAuthService {
 	@Override
 	public void logout(User user) {
 
-		onlineUsers.remove(user);
+		onlineUsers.remove(user.getId());
 
 	}
 }

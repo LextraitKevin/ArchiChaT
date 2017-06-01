@@ -1,8 +1,7 @@
 package Services;
 
 import Models.User;
-
-import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Created by kevin on 31/05/2017.
@@ -15,5 +14,5 @@ public interface IAuthService {
 
 	public void logout(User user);
 
-	public ArrayList<User> getOnlineUsers();
+	public HashMap<Integer,User> getOnlineUsers();
 }
