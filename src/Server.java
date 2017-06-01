@@ -33,9 +33,9 @@ public class Server {
 		authS.register(newuser);
 		authS.register(newuser1);
 
-		//newuser.setPassword("bla");
+		newuser.setPassword("bla");
 
-		//authS.login(newuser1);
+		authS.login(newuser);
 
 	}
 }
