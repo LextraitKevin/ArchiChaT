@@ -16,4 +16,6 @@ public interface IUserManagementService {
     public int removeFriend(User user, User exFriend);
     public void sendInvite(User user, User newFriend);
 
+
+
 }

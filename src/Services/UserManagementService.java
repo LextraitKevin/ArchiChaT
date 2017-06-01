@@ -34,4 +34,6 @@ public class UserManagementService implements IUserManagementService{
     public void sendInvite(User user, User newFriend) {
 
     }
+
+
 }
