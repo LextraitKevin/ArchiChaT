@@ -2,7 +2,8 @@
 *.class
 
 .idea/
-bin/
+!bin/
+bin/*
 
 # Log file
 *.log

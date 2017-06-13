@@ -18,7 +18,6 @@ public class Message implements Serializable {
 		this.author = author;
 		this.content = content;
 		this.timeStamp = timeStamp;
-
 	}
 
 	public Message(int id, User author, String content) {
@@ -26,7 +25,6 @@ public class Message implements Serializable {
 		this.author = author;
 		this.content = content;
 		this.timeStamp = LocalDateTime.now();
-
 	}
 
 
