@@ -14,6 +14,14 @@ public class Message implements Serializable {
 	private LocalDateTime timeStamp;
 
 
+	public Message(int id, User author, String content, User receipUser) {
+		this.id = id;
+		this.author = author;
+		this.content = content;
+		this.timeStamp = LocalDateTime.now();
+		this.receipUser = receipUser;
+
+	}
 	public Message(int id, User author, String content, LocalDateTime timeStamp, User receipUser) {
 		this.id = id;
 		this.author = author;
@@ -34,14 +42,6 @@ public class Message implements Serializable {
 				'}';
 	}
 
-	public Message(int id, User author, String content, User receipUser) {
-		this.id = id;
-		this.author = author;
-		this.content = content;
-		this.timeStamp = LocalDateTime.now();
-		this.receipUser = receipUser;
-
-	}
 
 
 	public int getId() {

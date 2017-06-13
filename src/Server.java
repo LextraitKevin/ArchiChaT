@@ -6,9 +6,8 @@ import Models.Message;
 import Models.User;
 import Services.AuthService;
 import Services.MessageService;
-import Services.PersistenceService;
+import Services.IAuthService;
 import Services.UserManagementService;
-
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
@@ -16,22 +15,19 @@ import java.util.ArrayList;
 
 public class Server {
 
+	public static final String HOST = "127.0.0.1";
+	public static final int PORT = 3000;
+	public static final String SERVICE_NAME = "ArchiChaTSrv";
 
 
 	public static void main(String[] args) throws Exception {
 
-
 /*
-	AuthService authService = new AuthService();
-        //authService.start();
+		AuthService authService = new AuthService();
 
-        AuthService stub;
-        stub = (AuthService) UnicastRemoteObject.exportObject(authService,0);
-
-        Registry registry = LocateRegistry.createRegistry(2001);
-        registry.bind("Infotrafic", stub);
-
-        System.out.println("Serveur ok");*/
+		IAuthService IAuthSvc = ( IAuthService ) UnicastRemoteObject.exportObject( authService, 0 );
+		Registry registry = LocateRegistry.createRegistry( PORT );
+		registry.bind( SERVICE_NAME, IAuthSvc );*/
 
 		User newuser = new User(1, "toto", "passwordtoto");
 		User newuser1 = new User(2, "tutu", "ghbsdk");
@@ -65,11 +61,6 @@ public class Server {
 			 test) {
 			System.out.println(m);
 		}
-
-
-
-
-
 
 	}
 }
