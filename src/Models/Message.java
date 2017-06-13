@@ -9,23 +9,37 @@ import java.time.LocalDateTime;
 public class Message implements Serializable {
 	private int id;
 	private User author;
+	private User receipUser;
 	private String content;
 	private LocalDateTime timeStamp;
 
 
-	public Message(int id, User author, String content, LocalDateTime timeStamp) {
+	public Message(int id, User author, String content, LocalDateTime timeStamp, User receipUser) {
 		this.id = id;
 		this.author = author;
 		this.content = content;
 		this.timeStamp = timeStamp;
+		this.receipUser = receipUser;
 
 	}
 
-	public Message(int id, User author, String content) {
+	@Override
+	public String toString() {
+		return "Message{" +
+				"id=" + id +
+				", author=" + author +
+				", content='" + content + '\'' +
+				", timeStamp=" + timeStamp +
+				", ReceipUser" + receipUser +
+				'}';
+	}
+
+	public Message(int id, User author, String content, User receipUser) {
 		this.id = id;
 		this.author = author;
 		this.content = content;
 		this.timeStamp = LocalDateTime.now();
+		this.receipUser = receipUser;
 
 	}
 
@@ -40,6 +54,10 @@ public class Message implements Serializable {
 
 	public User getAuthor() {
 		return author;
+	}
+
+	public User getReceipUser() {
+		return receipUser;
 	}
 
 	public void setAuthor(User author) {
