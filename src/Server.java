@@ -4,13 +4,11 @@
 
 import Models.Message;
 import Models.User;
-import Services.AuthService;
-import Services.MessageService;
-import Services.IAuthService;
-import Services.UserManagementService;
+import Services.*;
+
 import java.util.ArrayList;
 
-public class Server {
+public class Server implements IRest{
 
 	public static final String HOST = "127.0.0.1";
 	public static final int PORT = 3000;
@@ -76,5 +74,55 @@ public class Server {
 		}
 
 
+	}
+	
+	@Override
+	public ArrayList< User > getUsers() {
+		return null;
+	}
+	
+	@Override
+	public User getUser( int userID ) {
+		return null;
+	}
+	
+	@Override
+	public User putUser( User user ) {
+		return null;
+	}
+	
+	@Override
+	public User postUser( User user ) {
+		return null;
+	}
+	
+	@Override
+	public void deleteUser( int userID ) {
+	
+	}
+	
+	@Override
+	public ArrayList< Message > getMessages() {
+		return null;
+	}
+	
+	@Override
+	public Message getMessage( int messageID ) {
+		return null;
+	}
+	
+	@Override
+	public Message putMessage( Message message ) {
+		return null;
+	}
+	
+	@Override
+	public Message postMessage( Message message ) {
+		return null;
+	}
+	
+	@Override
+	public void deleteMessage( int messageID ) {
+	
 	}
 }
