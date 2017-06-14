@@ -8,9 +8,6 @@ import Services.AuthService;
 import Services.MessageService;
 import Services.IAuthService;
 import Services.UserManagementService;
-import java.rmi.registry.LocateRegistry;
-import java.rmi.registry.Registry;
-import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 
 public class Server {
@@ -31,6 +28,7 @@ public class Server {
 
 		User newuser = new User(1, "toto", "passwordtoto");
 		User newuser1 = new User(2, "tutu", "ghbsdk");
+		User newuser2 = new User(2, "tutu", "ghbsdk");
 
 
 
@@ -41,6 +39,18 @@ public class Server {
 
 		authS.register(newuser);
 		authS.register(newuser1);
+		authS.register(newuser2);
+
+		//On ajoute un ami à newuser
+		ArrayList<User> newuserFriends = new ArrayList<>();
+		newuserFriends.add(newuser1);
+
+		newuser.setFriends(newuserFriends);
+		authS.login(newuser);
+		authS.login(newuser1);
+		authS.login(newuser2);
+
+		System.out.println(UMS.findFriends(newuser, authS));
 
 		Message m1 = new Message(1,newuser,"je suis l'utilisateur 1",newuser1);
 
@@ -57,11 +67,14 @@ public class Server {
 
 		ArrayList<Message> test = msgS.getDmMessage(newuser,newuser1);
 
+
+		authS.login(newuser);
+
 		for (Message m:
-			 test) {
+				test) {
 			System.out.println(m);
 		}
 
+
 	}
 }
-

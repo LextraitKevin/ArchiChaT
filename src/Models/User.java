@@ -2,6 +2,7 @@ package Models;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Created by kevin on 31/05/2017.
@@ -11,6 +12,7 @@ public class User implements Serializable {
 	private String name;
 	private String password;
 	private ArrayList<User> friends;
+	private HashMap<Integer, User> friendsRequest;
 
 	public User(int id) {
 		this.id = id;
@@ -64,6 +66,14 @@ public class User implements Serializable {
 	public String hashPassword(String password) {
 		//TODO
 		return password;
+	}
+
+	public HashMap<Integer, User> getFriendsRequest() {
+		return friendsRequest;
+	}
+
+	public void setFriendsRequest(HashMap<Integer, User> friendsRequest) {
+		this.friendsRequest = friendsRequest;
 	}
 
 	@Override
