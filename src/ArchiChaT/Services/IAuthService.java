@@ -1,6 +1,6 @@
-package Services;
+package ArchiChaT.Services;
 
-import Models.User;
+import ArchiChaT.Models.User;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;

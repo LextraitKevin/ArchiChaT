@@ -1,22 +1,36 @@
-package Models;
+package ArchiChaT.Models;
 
+import org.pojomatic.annotations.AutoProperty;
+
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+
 /**
  * Created by kevin on 31/05/2017.
  */
+@XmlRootElement
+@XmlType( name = "users" )
+@XmlAccessorType( XmlAccessType.FIELD )
+@AutoProperty
 public class User implements Serializable {
 	private int id;
 	private String name;
 	private String password;
-	private ArrayList<User> friends;
-	private HashMap<Integer, User> friendsRequest;
-
-	public User(int id) {
+	private ArrayList< User > friends;
+	private HashMap< Integer, User > friendsRequest;
+	
+	public User() {
+	}
+	
+	public User( int id ) {
 		this.id = id;
-		this.friends = new ArrayList<User>();
+		this.friends = new ArrayList< User >();
 	}
 
 	public User(int id, String name, String password) {
@@ -78,11 +92,11 @@ public class User implements Serializable {
 
 	@Override
 	public String toString() {
-		return "User{" +
+		return "User[" +
 				"id=" + id +
 				", name='" + name + '\'' +
 				", password='" + password + '\'' +
 				", friends=" + friends +
-				'}';
+				']';
 	}
 }

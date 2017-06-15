@@ -2,18 +2,41 @@
  * Created by kevin on 10/05/2017.
  */
 
-import Models.Message;
-import Models.User;
-import Services.*;
+package ArchiChaT;
 
+import ArchiChaT.Models.Message;
+import ArchiChaT.Models.User;
+import ArchiChaT.Rest.RestMessage;
+import ArchiChaT.Rest.RestUser;
+import ArchiChaT.Services.*;
+
+import javax.jws.WebService;
+import javax.ws.rs.ApplicationPath;
+import javax.ws.rs.core.Application;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
-public class Server implements IRest{
+@WebService( name = "ArchiChaT" )
+@ApplicationPath( "/" )
+public class Server  extends Application {
 
 	public static final String HOST = "127.0.0.1";
 	public static final int PORT = 3000;
 	public static final String SERVICE_NAME = "ArchiChaTSrv";
-
+	
+	/**
+	 * Set the resources include in server
+	 * @return All resources classes in Server
+	 */
+	public Set< Class< ? > > getClasses() {
+		HashSet resourcesREST = new HashSet< Class< ? > >();
+		
+		// Add below
+		resourcesREST.add( RestMessage.class );
+		resourcesREST.add( RestUser.class );
+		return resourcesREST;
+	}
 
 	public static void main(String[] args) throws Exception {
 
@@ -74,55 +97,5 @@ public class Server implements IRest{
 		}
 
 
-	}
-	
-	@Override
-	public ArrayList< User > getUsers() {
-		return null;
-	}
-	
-	@Override
-	public User getUser( int userID ) {
-		return null;
-	}
-	
-	@Override
-	public User putUser( User user ) {
-		return null;
-	}
-	
-	@Override
-	public User postUser( User user ) {
-		return null;
-	}
-	
-	@Override
-	public void deleteUser( int userID ) {
-	
-	}
-	
-	@Override
-	public ArrayList< Message > getMessages() {
-		return null;
-	}
-	
-	@Override
-	public Message getMessage( int messageID ) {
-		return null;
-	}
-	
-	@Override
-	public Message putMessage( Message message ) {
-		return null;
-	}
-	
-	@Override
-	public Message postMessage( Message message ) {
-		return null;
-	}
-	
-	@Override
-	public void deleteMessage( int messageID ) {
-	
 	}
 }

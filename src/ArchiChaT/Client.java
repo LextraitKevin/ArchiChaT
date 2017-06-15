@@ -1,4 +1,6 @@
-import Services.IAuthService;
+package ArchiChaT;
+
+import ArchiChaT.Services.IAuthService;
 
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;

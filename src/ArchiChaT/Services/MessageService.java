@@ -1,11 +1,9 @@
-package Services;
+package ArchiChaT.Services;
 
-import Models.Message;
-import Models.User;
+import ArchiChaT.Models.Message;
+import ArchiChaT.Models.User;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 
 /**
  * Created by kevin on 13/06/2017.

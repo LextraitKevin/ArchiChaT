@@ -1,17 +1,24 @@
-package Services;
+package ArchiChaT.Rest;
 
-import Models.Message;
-import Models.User;
+import ArchiChaT.Models.Message;
+import ArchiChaT.Models.User;
 
 import java.util.ArrayList;
 
 /**
  * Created by SMITHE on 14-Jun-17.
  */
-public interface IRest {
+public interface IRest<T> {
+	
+	public T getOne( int id );
+	public ArrayList<T> getAll();
+	public T put( int id, T resource );
+	public T post( T resource );
+	public void delete( int id );
+	
 	// --------------------------------- Users
 	
-	public ArrayList< User > getUsers();
+	/*public ArrayList< User > getUsers();
 	
 	public User getUser( int userID );
 	
@@ -19,10 +26,10 @@ public interface IRest {
 	
 	public User postUser( User user );
 	
-	public void deleteUser( int userID );
+	public void deleteUser( int userID );*/
 	
 	// --------------------------------- Messages
-	public ArrayList< Message > getMessages();
+	/*public ArrayList< Message > getMessages();
 	
 	public Message getMessage( int messageID );
 	
@@ -30,7 +37,7 @@ public interface IRest {
 	
 	public Message postMessage( Message message );
 	
-	public void deleteMessage( int messageID );
+	public void deleteMessage( int messageID );*/
 	
 	// --------------------------------- Server
 }
