@@ -4,31 +4,58 @@
 
 import Models.Message;
 import Models.User;
-import Services.AuthService;
-import Services.MessageService;
-import Services.IAuthService;
-import Services.UserManagementService;
+import Services.*;
+
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
+import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 
 public class Server {
 
 	public static final String HOST = "127.0.0.1";
 	public static final int PORT = 3000;
-	public static final String SERVICE_NAME = "ArchiChaTSrv";
+	public static final String AUTH_SERVICE_NAME = "AuthService";
+	public static final String MESSAGE_SERVICE_NAME = "MessageService";
+	public static final String PERSISTENCE_SERVICE_NAME = "PersistenceService";
+	public static final String USERMANAGEMENT_SERVICE_NAME = "UserManagementService";
+
+	private static IAuthService authService;
+	private static IPersistenceService persistenceService;
+	private static IMessageService messageService;
+	private static IUserManagementService userManagementService;
+
 
 
 	public static void main(String[] args) throws Exception {
 
-/*
-		AuthService authService = new AuthService();
+		Tier3 t3 = new Tier3();
 
-		IAuthService IAuthSvc = ( IAuthService ) UnicastRemoteObject.exportObject( authService, 0 );
-		Registry registry = LocateRegistry.createRegistry( PORT );
-		registry.bind( SERVICE_NAME, IAuthSvc );*/
+
+
+
+		Registry registry = LocateRegistry.getRegistry( Server.HOST, Server.PORT );
+		authService = ( IAuthService ) registry.lookup( Server.AUTH_SERVICE_NAME );
+		messageService = ( IMessageService ) registry.lookup( Server.MESSAGE_SERVICE_NAME );
+		persistenceService = ( IPersistenceService ) registry.lookup( Server.PERSISTENCE_SERVICE_NAME );
+		userManagementService = ( IUserManagementService ) registry.lookup( Server.USERMANAGEMENT_SERVICE_NAME );
+
+
+
+		User newuser = new User(1, "toto", "passwordtoto");
+
+		authService.register(newuser);
+
+		System.out.println(authService.login(newuser));
+
+
+
+
+/*
 
 		User newuser = new User(1, "toto", "passwordtoto");
 		User newuser1 = new User(2, "tutu", "ghbsdk");
-		User newuser2 = new User(2, "tutu", "ghbsdk");
+		User newuser2 = new User(3, "tutu", "ghbsdk");
 
 
 
@@ -73,7 +100,7 @@ public class Server {
 		for (Message m:
 				test) {
 			System.out.println(m);
-		}
+		}*/
 
 
 	}

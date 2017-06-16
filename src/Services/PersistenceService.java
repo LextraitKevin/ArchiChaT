@@ -1,6 +1,7 @@
 package Services;
 
 import java.io.*;
+import java.rmi.RemoteException;
 import java.util.HashMap;
 
 /**
@@ -9,7 +10,7 @@ import java.util.HashMap;
 public class PersistenceService implements IPersistenceService {
 
 	@Override
-	public Object read(String filename) {
+	public Object read(String filename) throws RemoteException {
 
 		Object content = null;
 		try {
@@ -41,7 +42,7 @@ public class PersistenceService implements IPersistenceService {
 	}
 
 	@Override
-	public boolean write(String filename, Object content) {
+	public boolean write(String filename, Object content) throws RemoteException {
 
 		try {
 

@@ -3,6 +3,7 @@ package Services;
 import Models.Message;
 import Models.User;
 
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -15,7 +16,7 @@ public class MessageService implements IMessageService {
 	private static final String MESSAGE_FILENAME = "bin/saveMessage.txt";
 
 	@Override
-	public int saveMessage(Message m) {
+	public int saveMessage(Message m) throws RemoteException {
 
 		PersistenceService ps = new PersistenceService();
 
@@ -39,7 +40,7 @@ public class MessageService implements IMessageService {
 	}
 
 	@Override
-	public ArrayList<Message> getAllMessage() {
+	public ArrayList<Message> getAllMessage() throws RemoteException {
 
 		PersistenceService ps = new PersistenceService();
 
@@ -54,7 +55,7 @@ public class MessageService implements IMessageService {
 	}
 
 	@Override
-	public ArrayList<Message> getDmMessage(User author, User receipUser) {
+	public ArrayList<Message> getDmMessage(User author, User receipUser) throws RemoteException {
 		PersistenceService ps = new PersistenceService();
 
 		ArrayList<Message> savedMessage = new ArrayList<Message>();

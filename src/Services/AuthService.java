@@ -3,6 +3,7 @@ package Services;
 import Models.User;
 
 import java.io.*;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -16,13 +17,13 @@ public class AuthService implements IAuthService {
 
 
 	@Override
-	public HashMap<Integer, User> getOnlineUsers() {
+	public HashMap<Integer, User> getOnlineUsers() throws RemoteException {
 		return onlineUsers;
 	}
 
 
 	@Override
-	public int login(User user) {
+	public int login(User user) throws RemoteException {
 
 		PersistenceService ps = new PersistenceService();
 		HashMap<Integer, User> savedUsers = new HashMap<Integer, User>();
@@ -48,7 +49,7 @@ public class AuthService implements IAuthService {
 	}
 
 	@Override
-	public int register(User user) {
+	public int register(User user) throws RemoteException {
 
 		HashMap<Integer, User> savedUsers = new HashMap<Integer, User>();
 
@@ -74,7 +75,7 @@ public class AuthService implements IAuthService {
 	}
 
 	@Override
-	public void logout(User user) {
+	public void logout(User user) throws RemoteException {
 
 		onlineUsers.remove(user.getId());
 

@@ -3,6 +3,7 @@ package Services;
 import Models.Message;
 import Models.User;
 
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -13,7 +14,7 @@ public class UserManagementService implements IUserManagementService{
 
     @Override
     //TODO
-    public ArrayList<Message> findPreviousRecords(User user, AuthService auth) {
+    public ArrayList<Message> findPreviousRecords(User user, AuthService auth) throws RemoteException {
 
         return null;
     }
@@ -26,7 +27,7 @@ public class UserManagementService implements IUserManagementService{
      * @return
      */
     @Override
-    public ArrayList<User> findOnlineFriends(User user, AuthService auth) {
+    public ArrayList<User> findOnlineFriends(User user, AuthService auth)throws RemoteException {
         ArrayList<User> onlineFriends = new ArrayList<>();
         for(User friend : user.getFriends()) {
             for (int i = 1; i <= auth.getOnlineUsers().size(); i++) {
@@ -44,7 +45,7 @@ public class UserManagementService implements IUserManagementService{
      * @return
      */
     @Override
-    public ArrayList<User> findFriends(User user, AuthService auth) {
+    public ArrayList<User> findFriends(User user, AuthService auth)throws RemoteException {
         ArrayList<User> futureFriends = new ArrayList<>();
 
         for (int i = 1; i <= auth.getOnlineUsers().size(); i++) {
@@ -65,7 +66,7 @@ public class UserManagementService implements IUserManagementService{
      * @return
      */
     @Override
-    public int removeFriend(User user, User exFriend) {
+    public int removeFriend(User user, User exFriend)throws RemoteException {
         if(user.getFriends().remove(exFriend)){
             return 0;
         } else {
@@ -79,7 +80,7 @@ public class UserManagementService implements IUserManagementService{
      * @param newFriend
      */
     @Override
-    public void sendInvite(User user, User newFriend) {
+    public void sendInvite(User user, User newFriend)throws RemoteException {
         user.getFriendsRequest().put(user.getFriendsRequest().size()+1,newFriend);
     }
 
@@ -90,7 +91,7 @@ public class UserManagementService implements IUserManagementService{
      * @return
      */
     @Override
-    public int addFriend(User user, User newFriend) {
+    public int addFriend(User user, User newFriend)throws RemoteException {
         if(user.getFriends().add(newFriend)){
             return 0;
         } else {
