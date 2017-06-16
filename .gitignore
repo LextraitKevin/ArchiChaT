@@ -2,7 +2,7 @@
 *.class
 
 .idea/
-!bin/
+!bin/.gitkeep
 bin/*
 
 # Log file

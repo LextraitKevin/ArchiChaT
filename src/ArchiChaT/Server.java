@@ -2,19 +2,34 @@
  * Created by kevin on 10/05/2017.
  */
 
-import Models.Message;
-import Models.User;
-import Services.*;
+package ArchiChaT;
+
 
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
-import java.util.ArrayList;
 
-public class Server {
+
+import ArchiChaT.Models.Message;
+import ArchiChaT.Models.User;
+import ArchiChaT.Rest.RestMessage;
+import ArchiChaT.Rest.RestUser;
+import ArchiChaT.Services.*;
+
+import javax.jws.WebService;
+import javax.ws.rs.ApplicationPath;
+import javax.ws.rs.core.Application;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
+
+@WebService( name = "ArchiChaT" )
+@ApplicationPath( "/" )
+public class Server  extends Application {
 
 	public static final String HOST = "127.0.0.1";
 	public static final int PORT = 3000;
+
 	public static final String AUTH_SERVICE_NAME = "AuthService";
 	public static final String MESSAGE_SERVICE_NAME = "MessageService";
 	public static final String PERSISTENCE_SERVICE_NAME = "PersistenceService";
@@ -26,11 +41,22 @@ public class Server {
 	private static IUserManagementService userManagementService;
 
 
+	
+	/**
+	 * Set the resources include in server
+	 * @return All resources classes in Server
+	 */
+	public Set< Class< ? > > getClasses() {
+		HashSet resourcesREST = new HashSet< Class< ? > >();
+		
+		// Add below
+		resourcesREST.add( RestMessage.class );
+		resourcesREST.add( RestUser.class );
+		return resourcesREST;
+	}
+
 
 	public static void main(String[] args) throws Exception {
-
-		Tier3 t3 = new Tier3();
-
 
 
 

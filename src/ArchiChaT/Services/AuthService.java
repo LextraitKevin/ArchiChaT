@@ -1,10 +1,8 @@
-package Services;
+package ArchiChaT.Services;
 
-import Models.User;
+import ArchiChaT.Models.User;
 
-import java.io.*;
 import java.rmi.RemoteException;
-import java.util.ArrayList;
 import java.util.HashMap;
 
 /**

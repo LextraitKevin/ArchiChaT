@@ -1,8 +1,8 @@
-package Services;
+package ArchiChaT.Services;
 
 import java.io.*;
 import java.rmi.RemoteException;
-import java.util.HashMap;
+
 
 /**
  * Created by kevin on 31/05/2017.

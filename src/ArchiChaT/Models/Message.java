@@ -1,20 +1,33 @@
-package Models;
+package ArchiChaT.Models;
 
+import org.pojomatic.annotations.AutoProperty;
+
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
  * Created by kevin on 31/05/2017.
  */
+
+@XmlRootElement
+@XmlType( name = "messages" )
+@XmlAccessorType( XmlAccessType.FIELD )
+@AutoProperty
 public class Message implements Serializable {
 	private int id;
 	private User author;
 	private User receipUser;
 	private String content;
 	private LocalDateTime timeStamp;
-
-
-	public Message(int id, User author, String content, User receipUser) {
+	
+	public Message() {
+	}
+	
+	public Message( int id, User author, String content, User receipUser) {
 		this.id = id;
 		this.author = author;
 		this.content = content;
