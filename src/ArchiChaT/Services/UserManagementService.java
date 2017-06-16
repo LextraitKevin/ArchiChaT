@@ -5,11 +5,20 @@ import ArchiChaT.Models.User;
 
 import java.rmi.RemoteException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Created by kevin on 31/05/2017.
  */
 public class UserManagementService implements IUserManagementService{
+
+
+    @Override
+    public User find(int uId) throws RemoteException {
+        PersistenceService p = new PersistenceService();
+        HashMap<Integer, User> users = (HashMap<Integer, User>) p.read(AuthService.USER_FILE_NAME);
+        return users.get(uId);
+    }
 
     @Override
     //TODO

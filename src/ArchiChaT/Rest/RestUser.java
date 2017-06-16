@@ -1,9 +1,19 @@
 package ArchiChaT.Rest;
 
 import ArchiChaT.Models.User;
+import ArchiChaT.Server;
+import ArchiChaT.Services.IAuthService;
+import ArchiChaT.Services.IMessageService;
+import ArchiChaT.Services.IPersistenceService;
+import ArchiChaT.Services.IUserManagementService;
 
+import javax.validation.constraints.Null;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
 import java.util.ArrayList;
 
 /**
@@ -12,7 +22,17 @@ import java.util.ArrayList;
 
 @Path( "/users" )
 public class RestUser implements IRest< User > {
-	
+	/**
+	 *
+	 * @param serviceName
+	 * @return
+	 */
+	@Override
+	public Object lookupService(String serviceName) throws RemoteException, NotBoundException {
+		Registry registry = LocateRegistry.getRegistry( Server.HOST, Server.PORT );
+		return registry.lookup( serviceName );
+	}
+
 	/**
 	 * Get one User from file with userID
 	 * @param id user id
@@ -22,11 +42,11 @@ public class RestUser implements IRest< User > {
 	@GET
 	@Path( "{id}" )
 	@Produces( MediaType.APPLICATION_JSON )
-	public User getOne( @PathParam( "id" ) int id ) {
+	public User getOne( @PathParam( "id" ) int id ) throws RemoteException, NotBoundException {
 		// TODO Get from file
-		User user = new User( 1, "toto", "passwordtoto" );
-		
-		return user;
+        IUserManagementService userManagementService = ( IUserManagementService ) lookupService(Server.USERMANAGEMENT_SERVICE_NAME);
+        System.out.println(id);
+        return userManagementService.find(id);
 	}
 	
 	/**
@@ -86,5 +106,6 @@ public class RestUser implements IRest< User > {
 	@Path( "{id}" )
 	public void delete( @PathParam( "id" ) int id ) {
 		// TODO Delete on file
+
 	}
 }

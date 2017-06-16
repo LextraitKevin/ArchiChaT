@@ -18,6 +18,7 @@ public interface IUserManagementService extends Remote {
     public int removeFriend(User user, User exFriend)throws RemoteException;
     public void sendInvite(User user, User newFriend)throws RemoteException;
     public int addFriend(User user, User newFriend)throws RemoteException;
+    public User find(int uId) throws RemoteException;
 
 
 

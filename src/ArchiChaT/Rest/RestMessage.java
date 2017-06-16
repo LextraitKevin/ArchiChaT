@@ -5,6 +5,8 @@ import ArchiChaT.Models.User;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 /**
@@ -71,5 +73,10 @@ public class RestMessage implements IRest< Message > {
 	@Path( "{id}" )
 	public void delete( @PathParam( "id" ) int id ) {
 		// TODO Delete on file
+	}
+
+	@Override
+	public Object lookupService(String serviceName) throws RemoteException, NotBoundException {
+		return null;
 	}
 }

@@ -10,7 +10,7 @@ import java.util.HashMap;
  */
 public class AuthService implements IAuthService {
 
-	private static final String userFileName = "bin/saveUser.txt";
+	public static final String USER_FILE_NAME = "bin/saveUser.txt";
 	private HashMap<Integer, User> onlineUsers = new HashMap<>();
 
 
@@ -28,7 +28,7 @@ public class AuthService implements IAuthService {
 
 		// Deserialization
 
-		Object tmp = ps.read(userFileName);
+		Object tmp = ps.read(USER_FILE_NAME);
 
 		if (tmp != null) {
 			savedUsers = (HashMap<Integer, User>) tmp;
@@ -54,7 +54,7 @@ public class AuthService implements IAuthService {
 		PersistenceService ps = new PersistenceService();
 
 
-		Object tmp = ps.read(userFileName);
+		Object tmp = ps.read(USER_FILE_NAME);
 
 		if (tmp != null)
 			savedUsers = (HashMap<Integer, User>) tmp;
@@ -62,7 +62,7 @@ public class AuthService implements IAuthService {
 
 		savedUsers.put(user.getId(), user);
 
-		if (ps.write(userFileName, savedUsers)) {
+		if (ps.write(USER_FILE_NAME, savedUsers)) {
 			savedUsers.remove(user.getId());
 		}
 
