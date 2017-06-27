@@ -59,7 +59,6 @@ public class AuthService implements IAuthService {
 		if (tmp != null)
 			savedUsers = (HashMap<Integer, User>) tmp;
 
-
 		savedUsers.put(user.getId(), user);
 
 		if (ps.write(USER_FILE_NAME, savedUsers)) {

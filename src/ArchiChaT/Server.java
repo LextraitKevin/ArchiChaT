@@ -5,45 +5,36 @@
 package ArchiChaT;
 
 
-import java.rmi.registry.LocateRegistry;
-import java.rmi.registry.Registry;
-import java.rmi.server.UnicastRemoteObject;
-
-
-import ArchiChaT.Models.Message;
-import ArchiChaT.Models.User;
 import ArchiChaT.Rest.RestMessage;
 import ArchiChaT.Rest.RestUser;
-import ArchiChaT.Services.*;
 
 import javax.jws.WebService;
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
 @WebService( name = "ArchiChaT" )
 @ApplicationPath( "/" )
-public class Server  extends Application {
-
+public class Server extends Application {
+	
 	public static final String HOST = "127.0.0.1";
 	public static final int PORT = 3000;
-
+	
 	public static final String AUTH_SERVICE_NAME = "AuthService";
 	public static final String MESSAGE_SERVICE_NAME = "MessageService";
 	public static final String PERSISTENCE_SERVICE_NAME = "PersistenceService";
 	public static final String USERMANAGEMENT_SERVICE_NAME = "UserManagementService";
 
-	private static IAuthService authService;
+	/*private static IAuthService authService;
 	private static IPersistenceService persistenceService;
 	private static IMessageService messageService;
-	private static IUserManagementService userManagementService;
-
-
+	private static IUserManagementService userManagementService;*/
+	
 	
 	/**
 	 * Set the resources include in server
+	 *
 	 * @return All resources classes in Server
 	 */
 	public Set< Class< ? > > getClasses() {
@@ -56,7 +47,7 @@ public class Server  extends Application {
 	}
 
 
-	public static void main(String[] args) throws Exception {
+	/*public static void main(String[] args) throws Exception {
 
 
 
@@ -77,7 +68,7 @@ public class Server  extends Application {
 
 
 
-/*
+*//*
 
 		User newuser = new User(1, "toto", "passwordtoto");
 		User newuser1 = new User(2, "tutu", "ghbsdk");
@@ -126,8 +117,8 @@ public class Server  extends Application {
 		for (Message m:
 				test) {
 			System.out.println(m);
-		}*/
+		}*//*
 
 
-	}
+	}*/
 }
