@@ -2,10 +2,7 @@ package ArchiChaT.Rest;
 
 import ArchiChaT.Models.User;
 import ArchiChaT.Server;
-import ArchiChaT.Services.IAuthService;
-import ArchiChaT.Services.IMessageService;
-import ArchiChaT.Services.IPersistenceService;
-import ArchiChaT.Services.IUserManagementService;
+import ArchiChaT.Services.*;
 
 import javax.validation.constraints.Null;
 import javax.ws.rs.*;
@@ -15,6 +12,7 @@ import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Created by SMITHE on 14-Jun-17.
@@ -23,18 +21,18 @@ import java.util.ArrayList;
 @Path( "/users" )
 public class RestUser implements IRest< User > {
 	/**
-	 *
 	 * @param serviceName
 	 * @return
 	 */
 	@Override
-	public Object lookupService(String serviceName) throws RemoteException, NotBoundException {
+	public Object lookupService( String serviceName ) throws RemoteException, NotBoundException {
 		Registry registry = LocateRegistry.getRegistry( Server.HOST, Server.PORT );
 		return registry.lookup( serviceName );
 	}
-
+	
 	/**
 	 * Get one User from file with userID
+	 *
 	 * @param id user id
 	 * @return User match to userID
 	 */
@@ -43,31 +41,32 @@ public class RestUser implements IRest< User > {
 	@Path( "{id}" )
 	@Produces( MediaType.APPLICATION_JSON )
 	public User getOne( @PathParam( "id" ) int id ) throws RemoteException, NotBoundException {
-		// TODO Get from file
-        IUserManagementService userManagementService = ( IUserManagementService ) lookupService(Server.USERMANAGEMENT_SERVICE_NAME);
-        System.out.println(id);
-        return userManagementService.find(id);
+		IUserManagementService userManagementService = ( IUserManagementService ) lookupService( Server.USERMANAGEMENT_SERVICE_NAME );
+		System.out.println( id );
+		return userManagementService.find( id );
 	}
 	
 	/**
 	 * Get all users
+	 *
 	 * @return All users
 	 */
 	@Override
 	@GET
 	@Produces( MediaType.APPLICATION_JSON )
-	public ArrayList< User > getAll() {
-		ArrayList< User > users = new ArrayList<>();
+	public ArrayList< User > getAll() throws RemoteException, NotBoundException {
+		//ArrayList< User > users = new ArrayList<>();
+		IUserManagementService userManagementService = ( IUserManagementService ) lookupService( Server.USERMANAGEMENT_SERVICE_NAME );
 		
 		// TODO Get from file
-		users.add( new User( 1, "toto", "passwordtoto" ) );
-		
-		return users;
+		//users.add( new User( 1, "toto", "passwordtoto" ) );
+		return userManagementService.findAll();
 	}
 	
 	/**
 	 * Update fully User
-	 * @param id User id to update
+	 *
+	 * @param id       User id to update
 	 * @param resource User pass by client
 	 * @return User saved
 	 */
@@ -76,14 +75,20 @@ public class RestUser implements IRest< User > {
 	@Path( "{id}" )
 	@Produces( MediaType.APPLICATION_JSON )
 	@Consumes( MediaType.APPLICATION_JSON )
-	public User put( @PathParam( "id" ) int id, User resource ) {
-		// TODO Update file
+	public User put( @PathParam( "id" ) int id, User resource ) throws RemoteException, NotBoundException {
+		IUserManagementService userManagementService = ( IUserManagementService ) lookupService( Server.USERMANAGEMENT_SERVICE_NAME );
+		User currentUser = userManagementService.find( id );
+		currentUser.setName( resource.getName() );
+		currentUser.setPassword( resource.getPassword() );
+		currentUser.setFriends( resource.getFriends() );
+		currentUser.setFriendsRequest( resource.getFriendsRequest() );
 		
-		return resource;
+		return userManagementService.update( currentUser );
 	}
 	
 	/**
 	 * Add user
+	 *
 	 * @param resource User to add
 	 * @return User added
 	 */
@@ -91,21 +96,21 @@ public class RestUser implements IRest< User > {
 	@POST
 	@Produces( MediaType.APPLICATION_JSON )
 	@Consumes( MediaType.APPLICATION_JSON )
-	public User post( User resource ) {
-		// TODO Update file
-		
-		return resource;
+	public User post( User resource ) throws RemoteException, NotBoundException {
+		IUserManagementService userManagementService = ( IUserManagementService ) lookupService( Server.USERMANAGEMENT_SERVICE_NAME );
+		return userManagementService.update( resource );
 	}
 	
 	/**
 	 * Delete user
+	 *
 	 * @param id User ID to delete
 	 */
 	@Override
 	@DELETE
 	@Path( "{id}" )
-	public void delete( @PathParam( "id" ) int id ) {
-		// TODO Delete on file
-
+	public void delete( @PathParam( "id" ) int id ) throws RemoteException, NotBoundException {
+		IUserManagementService userManagementService = ( IUserManagementService ) lookupService( Server.USERMANAGEMENT_SERVICE_NAME );
+		userManagementService.delete( id );
 	}
 }
