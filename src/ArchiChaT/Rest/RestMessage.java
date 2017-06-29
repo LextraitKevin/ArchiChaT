@@ -4,6 +4,7 @@ import ArchiChaT.Models.Message;
 import ArchiChaT.Models.User;
 import ArchiChaT.Server;
 import ArchiChaT.Services.IMessageService;
+import ArchiChaT.Services.IUserManagementService;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -24,7 +25,7 @@ public class RestMessage implements IRest< Message > {
 	@GET
 	@Path( "{id}" )
 	@Produces( MediaType.APPLICATION_JSON )
-	public Message getOne( int id ) throws RemoteException, NotBoundException {
+	public Message getOne( @PathParam( "id" ) int id ) throws RemoteException, NotBoundException {
 
 		IMessageService messageService = (IMessageService) lookupService(Server.MESSAGE_SERVICE_NAME);
 		return messageService.getOne(id);
@@ -33,12 +34,16 @@ public class RestMessage implements IRest< Message > {
 
 	//@Override
 	@GET
-	@Path( "{exp}/{dest}" )
+	@Path( "{expID}/{destID}" )
 	@Produces( MediaType.APPLICATION_JSON )
-	public ArrayList<Message> getDmMessage(User exp, User dest) throws RemoteException, NotBoundException {
-
+	public ArrayList<Message> getDmMessage( @PathParam( "expID" ) int expID, @PathParam( "destID" ) int destID) throws RemoteException, NotBoundException {
+		IUserManagementService userManagementService = ( IUserManagementService ) lookupService( Server.USERMANAGEMENT_SERVICE_NAME );
+		User expUser = userManagementService.find( expID );
+		User destUser = userManagementService.find( destID );
+		
+		
 		IMessageService messageService = (IMessageService) lookupService(Server.MESSAGE_SERVICE_NAME);
-		return messageService.getDmMessage(exp, dest);
+		return messageService.getDmMessage(expUser, destUser);
 
 	}
 
@@ -66,7 +71,6 @@ public class RestMessage implements IRest< Message > {
 	@Produces( MediaType.APPLICATION_JSON )
 	@Consumes( MediaType.APPLICATION_JSON )
 	public Message post( Message resource ) throws RemoteException, NotBoundException {
-		// TODO Update file
 		IMessageService messageService = (IMessageService) lookupService(Server.MESSAGE_SERVICE_NAME);
 		return messageService.getOne(messageService.saveMessage(resource));
 	}
@@ -75,7 +79,6 @@ public class RestMessage implements IRest< Message > {
 	@DELETE
 	@Path( "{id}" )
 	public void delete( @PathParam( "id" ) int id ) {
-		// TODO Delete on file
 	}
 
 	@Override
