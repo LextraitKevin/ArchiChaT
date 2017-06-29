@@ -65,10 +65,10 @@ public class RestMessage implements IRest< Message > {
 	@POST
 	@Produces( MediaType.APPLICATION_JSON )
 	@Consumes( MediaType.APPLICATION_JSON )
-	public Message post( Message resource ) {
+	public Message post( Message resource ) throws RemoteException, NotBoundException {
 		// TODO Update file
-		
-		return resource;
+		IMessageService messageService = (IMessageService) lookupService(Server.MESSAGE_SERVICE_NAME);
+		return messageService.getOne(messageService.saveMessage(resource));
 	}
 	
 	@Override

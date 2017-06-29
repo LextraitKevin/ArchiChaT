@@ -15,8 +15,8 @@ public interface IRest< T > {
 	public T getOne( int id ) throws RemoteException, NotBoundException;
 
 	public ArrayList<T> getAll() throws RemoteException, NotBoundException;
-	public T put( int id, T resource );
-	public T post( T resource );
-	public void delete( int id );
+	public T put( int id, T resource ) throws RemoteException, NotBoundException;
+	public T post( T resource ) throws RemoteException, NotBoundException;
+	public void delete( int id ) throws RemoteException, NotBoundException;
 	public Object lookupService(String serviceName) throws RemoteException, NotBoundException;
 }

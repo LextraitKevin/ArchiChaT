@@ -34,7 +34,7 @@ public class MessageService implements IMessageService {
 		}
 
 		System.out.println("Message sauvegardé");
-		return 0;
+		return m.getId();
 	}
 
 	@Override
