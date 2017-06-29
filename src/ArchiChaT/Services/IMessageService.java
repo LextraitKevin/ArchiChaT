@@ -17,4 +17,6 @@ public interface IMessageService extends Remote {
 	public ArrayList<Message> getAllMessage() throws RemoteException;
 
 	public ArrayList<Message> getDmMessage(User author, User receipUser) throws RemoteException;
+
+	public Message getOne(int id) throws RemoteException;
 }

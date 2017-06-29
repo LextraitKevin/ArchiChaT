@@ -13,7 +13,7 @@ import java.util.ArrayList;
 public interface IRest<T> {
 	
 	public T getOne( int id ) throws RemoteException, NotBoundException;
-	public ArrayList<T> getAll();
+	public ArrayList<T> getAll() throws RemoteException, NotBoundException;
 	public T put( int id, T resource );
 	public T post( T resource );
 	public void delete( int id );

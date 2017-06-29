@@ -2,11 +2,15 @@ package ArchiChaT.Rest;
 
 import ArchiChaT.Models.Message;
 import ArchiChaT.Models.User;
+import ArchiChaT.Server;
+import ArchiChaT.Services.IMessageService;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
 import java.util.ArrayList;
 
 /**
@@ -20,31 +24,30 @@ public class RestMessage implements IRest< Message > {
 	@GET
 	@Path( "{id}" )
 	@Produces( MediaType.APPLICATION_JSON )
-	public Message getOne( int id ) {
-		// TODO Get from file
-		
-		User user1 = new User( 1, "toto", "passwordtoto" );
-		User user2 = new User( 2, "tutu", "ghbsdk" );
-		Message m1 = new Message( 1, user1, "je suis l'utilisateur 1", user2 );
-		
-		return m1;
+	public Message getOne( int id ) throws RemoteException, NotBoundException {
+
+		IMessageService messageService = (IMessageService) lookupService(Server.MESSAGE_SERVICE_NAME);
+		return messageService.getOne(id);
+
 	}
-	
+
+	//@Override
+	@GET
+	@Path( "{exp}/{dest}" )
+	@Produces( MediaType.APPLICATION_JSON )
+	public ArrayList<Message> getDmMessage(User exp, User dest) throws RemoteException, NotBoundException {
+
+		IMessageService messageService = (IMessageService) lookupService(Server.MESSAGE_SERVICE_NAME);
+		return messageService.getDmMessage(exp, dest);
+
+	}
+
 	@Override
 	@GET
 	@Produces( MediaType.APPLICATION_JSON )
-	public ArrayList< Message > getAll() {
-		ArrayList< Message > messages = new ArrayList<>();
-		
-		// TODO Get from file
-		
-		User user1 = new User( 1, "toto", "passwordtoto" );
-		User user2 = new User( 2, "tutu", "ghbsdk" );
-		Message m1 = new Message( 1, user1, "je suis l'utilisateur 1", user2 );
-		
-		messages.add( m1 );
-		
-		return messages;
+	public ArrayList< Message > getAll() throws RemoteException, NotBoundException {
+		IMessageService messageService = (IMessageService) lookupService(Server.MESSAGE_SERVICE_NAME);
+		return messageService.getAllMessage();
 	}
 	
 	@Override
@@ -57,7 +60,7 @@ public class RestMessage implements IRest< Message > {
 		
 		return resource;
 	}
-	
+
 	@Override
 	@POST
 	@Produces( MediaType.APPLICATION_JSON )
@@ -77,6 +80,7 @@ public class RestMessage implements IRest< Message > {
 
 	@Override
 	public Object lookupService(String serviceName) throws RemoteException, NotBoundException {
-		return null;
+		Registry registry = LocateRegistry.getRegistry( Server.HOST, Server.PORT );
+		return registry.lookup( serviceName );
 	}
 }

@@ -75,4 +75,18 @@ public class MessageService implements IMessageService {
 
 		return conversation;
 	}
+
+	@Override
+	public Message getOne(int id) throws RemoteException {
+		PersistenceService ps = new PersistenceService();
+
+		ArrayList<Message> savedMessage = new ArrayList<Message>();
+
+		Object tmp = ps.read(MESSAGE_FILENAME);
+
+		if (tmp != null)
+			savedMessage = (ArrayList<Message>) tmp;
+
+		return savedMessage.get(id);
+	}
 }
