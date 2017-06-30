@@ -41,7 +41,6 @@ public class RestMessage implements IRest< Message > {
 		User expUser = userManagementService.find( expID );
 		User destUser = userManagementService.find( destID );
 		
-		
 		IMessageService messageService = (IMessageService) lookupService(Server.MESSAGE_SERVICE_NAME);
 		return messageService.getDmMessage(expUser, destUser);
 
@@ -61,8 +60,6 @@ public class RestMessage implements IRest< Message > {
 	@Produces( MediaType.APPLICATION_JSON )
 	@Consumes( MediaType.APPLICATION_JSON )
 	public Message put( @PathParam( "id" ) int id, Message resource ) {
-		// TODO Update file
-		
 		return resource;
 	}
 

@@ -2,15 +2,15 @@ package ArchiChaT;
 
 import ArchiChaT.Models.Message;
 import ArchiChaT.Models.User;
-import ArchiChaT.Rest.RestMessage;
-import ArchiChaT.Rest.RestUser;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.lang.reflect.Type;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +24,7 @@ import com.google.gson.reflect.TypeToken;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.lang.reflect.Type;
+
 
 /**
  * Created by SMITHE on 13-Jun-17.
