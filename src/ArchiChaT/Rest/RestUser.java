@@ -12,7 +12,6 @@ import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 /**
  * Created by SMITHE on 14-Jun-17.
@@ -56,10 +55,12 @@ public class RestUser implements IRest< User > {
 	@GET
 	@Path( "onlineUser" )
 	@Produces( MediaType.APPLICATION_JSON )
-	public HashMap<Integer, User> getUserFriends() throws RemoteException, NotBoundException {
-		IAuthService authService = (IAuthService) lookupService( Server.AUTH_SERVICE_NAME );
+	public ArrayList<User> getUserFriends() throws RemoteException, NotBoundException {
+		IAuthService authService = ( IAuthService ) lookupService( Server.AUTH_SERVICE_NAME );
+		ArrayList< User > onlineUsers = new ArrayList<>();
 		
-		return authService.getOnlineUsers();
+		onlineUsers.addAll( authService.getOnlineUsers().values() );
+		return onlineUsers;
 	}
 	
 	/**
