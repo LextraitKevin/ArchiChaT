@@ -1,8 +1,5 @@
 package ArchiChaT.Rest;
 
-import ArchiChaT.Models.Message;
-import ArchiChaT.Models.User;
-
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
