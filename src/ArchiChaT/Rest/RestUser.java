@@ -2,6 +2,7 @@ package ArchiChaT.Rest;
 
 import ArchiChaT.Models.User;
 import ArchiChaT.Server;
+import ArchiChaT.Services.IAuthService;
 import ArchiChaT.Services.IUserManagementService;
 
 import javax.ws.rs.*;
@@ -11,6 +12,7 @@ import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Created by SMITHE on 14-Jun-17.
@@ -45,20 +47,19 @@ public class RestUser implements IRest< User > {
 	}
 	
 	/**
-	 * Get friends for user
+	 * Get all online User
 	 *
-	 * @param id user id
-	 * @return Friends of user requested
+	 * @return onlineUsers
 	 * @throws RemoteException
 	 * @throws NotBoundException
 	 */
 	@GET
-	@Path( "{id}/friends" )
+	@Path( "onlineUser" )
 	@Produces( MediaType.APPLICATION_JSON )
-	public ArrayList< User > getUserFirends( @PathParam( "id" ) int id ) throws RemoteException, NotBoundException {
-		IUserManagementService userManagementService = ( IUserManagementService ) lookupService( Server.USERMANAGEMENT_SERVICE_NAME );
+	public HashMap<Integer, User> getUserFriends() throws RemoteException, NotBoundException {
+		IAuthService authService = (IAuthService) lookupService( Server.AUTH_SERVICE_NAME );
 		
-		return userManagementService.find( id ).getFriends();
+		return authService.getOnlineUsers();
 	}
 	
 	/**

@@ -13,6 +13,7 @@ import java.lang.reflect.Type;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Scanner;
 
@@ -96,6 +97,26 @@ public class Client {
 
 
 					break;
+
+				case "onlineFriend" :
+
+					if(connected) {
+
+						String content = sendGet("http://localhost:8080/ArchiChaT_Web_exploded/users/onlineUser");
+
+						Type listType = new TypeToken<HashMap<Integer, User>>() {
+						}.getType();
+
+						HashMap<Integer, User> onlineUsers = new Gson().fromJson(content, listType);
+
+						System.out.println(onlineUsers);
+
+					}else{
+						System.out.println("You must be connected to do this action");
+					}
+
+					break;
+
 
 
 				case "addFriend" :
