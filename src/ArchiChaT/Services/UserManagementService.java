@@ -104,10 +104,11 @@ public class UserManagementService implements IUserManagementService {
 	 * Allows the User user to find new friends among the connected users
 	 *
 	 * @param user
+	 * @param auth
 	 * @return
 	 */
 	@Override
-	public ArrayList< User > findFriends( User user, AuthService auth ) throws RemoteException {
+	public ArrayList< User > findFriends( User user, IAuthService auth ) throws RemoteException {
 		ArrayList< User > futureFriends = new ArrayList<>();
 		
 		for ( int i = 1; i <= auth.getOnlineUsers().size(); i++ ) {

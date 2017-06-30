@@ -2,9 +2,8 @@ package ArchiChaT.Rest;
 
 import ArchiChaT.Models.User;
 import ArchiChaT.Server;
-import ArchiChaT.Services.*;
+import ArchiChaT.Services.IUserManagementService;
 
-import javax.validation.constraints.Null;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.rmi.NotBoundException;
@@ -12,7 +11,6 @@ import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 /**
  * Created by SMITHE on 14-Jun-17.
@@ -42,8 +40,25 @@ public class RestUser implements IRest< User > {
 	@Produces( MediaType.APPLICATION_JSON )
 	public User getOne( @PathParam( "id" ) int id ) throws RemoteException, NotBoundException {
 		IUserManagementService userManagementService = ( IUserManagementService ) lookupService( Server.USERMANAGEMENT_SERVICE_NAME );
-		System.out.println( id );
+		//System.out.println( id );
 		return userManagementService.find( id );
+	}
+	
+	/**
+	 * Get friends for user
+	 *
+	 * @param id user id
+	 * @return Friends of user requested
+	 * @throws RemoteException
+	 * @throws NotBoundException
+	 */
+	@GET
+	@Path( "{id}/friends" )
+	@Produces( MediaType.APPLICATION_JSON )
+	public ArrayList< User > getUserFirends( @PathParam( "id" ) int id ) throws RemoteException, NotBoundException {
+		IUserManagementService userManagementService = ( IUserManagementService ) lookupService( Server.USERMANAGEMENT_SERVICE_NAME );
+		
+		return userManagementService.find( id ).getFriends();
 	}
 	
 	/**
@@ -58,8 +73,6 @@ public class RestUser implements IRest< User > {
 		//ArrayList< User > users = new ArrayList<>();
 		IUserManagementService userManagementService = ( IUserManagementService ) lookupService( Server.USERMANAGEMENT_SERVICE_NAME );
 		
-		// TODO Get from file
-		//users.add( new User( 1, "toto", "passwordtoto" ) );
 		return userManagementService.findAll();
 	}
 	
